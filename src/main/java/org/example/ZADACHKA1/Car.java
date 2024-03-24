@@ -5,7 +5,7 @@ package org.example.ZADACHKA1;
 Переделайте обычный класс снизу в обобщенный класс
 */
 public class Car {
-    private String model
+    private String model;
     private String color;
 
     public Car(String model, String color) {
