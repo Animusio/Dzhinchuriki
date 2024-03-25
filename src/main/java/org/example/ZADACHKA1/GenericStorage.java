@@ -4,6 +4,7 @@ package org.example.ZADACHKA1;
 
 //ЗАДАНИЕ 1
 //Переделайте обычный класс хранилище(Storage) в обобщенный(GenericStorage) чтобы он смог принимать не только строки
+
 /*
 public class Storage {
     private String item;
