@@ -2,7 +2,7 @@ package org.example.ZADACHKA2;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 
-//ЗАДАНИЕ2
+//ЗАДАНИЕ 2
 // Напишите обобщенный класс GenericStack, который представляет собой стек,
 // поддерживающий операции push, pop и peek.
 // Используйте массив для внутреннего хранения элементов.
