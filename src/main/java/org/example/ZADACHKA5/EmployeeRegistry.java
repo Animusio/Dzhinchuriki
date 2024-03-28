@@ -23,7 +23,7 @@ import java.util.Map;
 
 
 
-//Пешение -
+//Решение -
 public class EmployeeRegistry<T extends Employee> {
     private Map<Integer, T> employees;
 
