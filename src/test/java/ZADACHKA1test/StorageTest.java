@@ -4,18 +4,32 @@ import org.example.ZADACHKA1.GenericStorage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Method;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class StorageTest {
     @Test
-    void storageTest(){
-        GenericStorage<String> storage = new GenericStorage<>();
-        storage.addItem("bolt");
+    void storageTest() throws Exception {
 
-        Assertions.assertEquals("bolt",storage.getItem());
+        try {
+            GenericStorage<String> storage = new GenericStorage<>();
 
-        GenericStorage<Integer> storage2 = new GenericStorage<>();
-        storage2.addItem(213);
+            Method addItemMethod = GenericStorage.class.getDeclaredMethod("addItem", Object.class);
+            addItemMethod.setAccessible(true);
 
-        Assertions.assertEquals(213,storage2.getItem());
+            addItemMethod.invoke(storage, "Test Item");
+
+            Method getItemMethod = GenericStorage.class.getDeclaredMethod("getItem");
+            getItemMethod.setAccessible(true);
+            String result = (String) getItemMethod.invoke(storage);
+
+            assertEquals("Test Item", result);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
 }

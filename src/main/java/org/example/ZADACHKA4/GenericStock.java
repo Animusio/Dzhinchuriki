@@ -21,30 +21,23 @@ import java.util.Set;
 
 //Решение -
 public class GenericStock<T> {
-
     private Map<T, Integer> items;
-
     public GenericStock() {
         items = new HashMap<>();
     }
-
-    public void add(T itemId, int quantity) {
+    private void add(T itemId, int quantity) {
         if (quantity < 0) {
             throw new IllegalArgumentException("Quantity cannot be negative");
         }
         items.put(itemId, quantity);
     }
-
-    public void remove(T itemId) {
+    private void remove(T itemId) {
         items.remove(itemId);
     }
-
-    public int getQuantity(T itemId) {
-        Integer quantity = items.get(itemId);
-        return quantity != null ? quantity : 0;
+    private Integer getQuantity(T itemId) {
+        return items.get(itemId);
     }
-
-    public Set<T> getAllItems() {
+    private Set<T> getAllItems() {
         return items.keySet();
     }
 }

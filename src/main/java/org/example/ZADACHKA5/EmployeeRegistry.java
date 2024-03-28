@@ -31,19 +31,19 @@ public class EmployeeRegistry<T extends Employee> {
         employees = new HashMap<>();
     }
 
-    public void add(T employee) {
+    private void add(T employee) {
         employees.put(employee.getId(), employee);
     }
 
-    public void remove(int id) {
+    private void remove(int id) {
         employees.remove(id);
     }
 
-    public T getEmployeeById(int id) {
+    private T getEmployeeById(int id) {
         return employees.get(id);
     }
 
-    public List<T> getAllEmployees() {
+    private List<T> getAllEmployees() {
         return new ArrayList<>(employees.values());
     }
 }

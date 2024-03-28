@@ -28,25 +28,25 @@ public class GenericStack<T> {
         elements = new ArrayList<>();
     }
 
-    public void push(T item) {
+    private void push(T item) {
         elements.add(item);
     }
 
-    public T pop() {
+    private T pop() {
         if (isEmpty()) {
             throw new EmptyStackException();
         }
         return elements.remove(elements.size() - 1);
     }
 
-    public T peek() {
+    private T peek() {
         if (isEmpty()) {
             throw new EmptyStackException();
         }
         return elements.get(elements.size() - 1);
     }
 
-    public boolean isEmpty() {
+    private boolean isEmpty() {
         return elements.isEmpty();
     }
 }

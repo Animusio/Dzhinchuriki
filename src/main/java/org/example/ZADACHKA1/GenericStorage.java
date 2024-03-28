@@ -34,14 +34,14 @@ public class Storage {
 
 //Решение -
 
-public class GenericStorage<T> {
-    private T item;
+public class GenericStorage<P> {
+    private P item;
 
-    public void addItem(T item) {
+    private void addItem(P item) {
         this.item = item;
     }
 
-    public T getItem() {
+    private P getItem() {
         return item;
     }
 

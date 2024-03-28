@@ -22,11 +22,11 @@ public class GenericPair<T, U> {
         this.second = second;
     }
 
-    public T getFirst() {
+    private T getFirst() {
         return first;
     }
 
-    public U getSecond() {
+    private U getSecond() {
         return second;
     }
 }
