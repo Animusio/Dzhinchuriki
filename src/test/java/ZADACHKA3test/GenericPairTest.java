@@ -11,6 +11,7 @@ public class GenericPairTest {
 
     @Test
     public void testGetters() throws Exception {
+        try {
 
         GenericPair<String, Integer> pair = new GenericPair<>("Hello", 123);
 
@@ -32,5 +33,9 @@ public class GenericPairTest {
 
         assertEquals(123, secondField.get(pair));
         assertEquals(123, getSecondMethod.invoke(pair));
+        } catch (Exception e) {
+            // Если возникло исключение, помечаем тест как проваленный
+            org.junit.jupiter.api.Assertions.fail("Ошибка при тестировании метода: " + e.getMessage());
+        }
     }
 }

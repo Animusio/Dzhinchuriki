@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 public class Stacktest {
     @Test
     public void testWithReflection() throws Exception {
+        try {
         GenericStack<Integer> stack = new GenericStack<>();
 
         Integer newItem = 123;
@@ -28,5 +29,9 @@ public class Stacktest {
 
         boolean isEmpty = (boolean) isEmptyMethod.invoke(stack);
         Assertions.assertTrue(isEmpty);
+        } catch (Exception e) {
+            // Если возникло исключение, помечаем тест как проваленный
+            org.junit.jupiter.api.Assertions.fail("Ошибка при тестировании метода: " + e.getMessage());
+        }
     }
 }

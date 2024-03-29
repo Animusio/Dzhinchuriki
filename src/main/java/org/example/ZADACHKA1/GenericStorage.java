@@ -36,15 +36,12 @@ public class Storage {
 
 public class GenericStorage<P> {
     private P item;
-
     private void addItem(P item) {
         this.item = item;
     }
-
     private P getItem() {
         return item;
     }
-
     @Override
     public String toString() {
         return "Storage{" +

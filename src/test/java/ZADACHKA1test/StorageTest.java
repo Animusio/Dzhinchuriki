@@ -10,8 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StorageTest {
     @Test
-    void storageTest() throws Exception {
-
+    void storageTest(){
+        try {
             GenericStorage<String> storage = new GenericStorage<>();
 
             Method addItemMethod = GenericStorage.class.getDeclaredMethod("addItem", Object.class);
@@ -23,7 +23,10 @@ public class StorageTest {
             String result = (String) getItemMethod.invoke(storage);
 
             assertEquals("Test Item", result);
-
+        } catch (Exception e) {
+            // Если возникло исключение, помечаем тест как проваленный
+            org.junit.jupiter.api.Assertions.fail("Ошибка при тестировании метода: " + e.getMessage());
+        }
     }
 
 

@@ -27,7 +27,6 @@ public class GenericStack<T> {
     public GenericStack() {
         elements = new ArrayList<>();
     }
-
     private void push(T item) {
         elements.add(item);
     }
@@ -38,14 +37,12 @@ public class GenericStack<T> {
         }
         return elements.remove(elements.size() - 1);
     }
-
     private T peek() {
         if (isEmpty()) {
             throw new EmptyStackException();
         }
         return elements.get(elements.size() - 1);
     }
-
     private boolean isEmpty() {
         return elements.isEmpty();
     }

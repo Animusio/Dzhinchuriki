@@ -14,7 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 
 public class GenericStockTest {
     @Test
-    public void testPrivateMethods() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public void testPrivateMethods(){
+        try {
         GenericStock<String> stock = new GenericStock<>();
 
         Field itemsField = GenericStock.class.getDeclaredField("items");
@@ -50,5 +51,9 @@ public class GenericStockTest {
         Assertions.assertNull(getQuantityMethod.invoke(stock, item1));
         Assertions.assertFalse(((Set<String>) getAllItemsMethod.invoke(stock)).contains(item1));
         Assertions.assertTrue(((Set<String>) getAllItemsMethod.invoke(stock)).contains(item2));
+        } catch (Exception e) {
+            // Если возникло исключение, помечаем тест как проваленный
+            org.junit.jupiter.api.Assertions.fail("Ошибка при тестировании метода: " + e.getMessage());
+        }
     }
 }

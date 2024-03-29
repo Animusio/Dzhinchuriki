@@ -12,6 +12,7 @@ public class EmployeeRegistryTest {
 
     @Test
     public void testMethods() throws Exception {
+        try {
         EmployeeRegistry<Employee> registry = new EmployeeRegistry<>();
 
         Field employeesField = EmployeeRegistry.class.getDeclaredField("employees");
@@ -38,6 +39,10 @@ public class EmployeeRegistryTest {
 
         List<Employee> allEmployees = (List<Employee>) getAllEmployeesMethod.invoke(registry);
         Assertions.assertTrue(allEmployees.isEmpty());
+        } catch (Exception e) {
+            // Если возникло исключение, помечаем тест как проваленный
+            org.junit.jupiter.api.Assertions.fail("Ошибка при тестировании метода: " + e.getMessage());
+        }
     }
 }
 
