@@ -21,7 +21,7 @@ public class Stacktest {
         Method popMethod = GenericStack.class.getDeclaredMethod("pop");
         popMethod.setAccessible(true);
 
-        Integer result = (Integer) popMethod.invoke(stack);
+        popMethod.invoke(stack);
 
         Method isEmptyMethod = GenericStack.class.getDeclaredMethod("isEmpty");
         isEmptyMethod.setAccessible(true);

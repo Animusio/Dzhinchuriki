@@ -12,12 +12,10 @@ public class StorageTest {
     @Test
     void storageTest() throws Exception {
 
-        try {
             GenericStorage<String> storage = new GenericStorage<>();
 
             Method addItemMethod = GenericStorage.class.getDeclaredMethod("addItem", Object.class);
             addItemMethod.setAccessible(true);
-
             addItemMethod.invoke(storage, "Test Item");
 
             Method getItemMethod = GenericStorage.class.getDeclaredMethod("getItem");
@@ -26,9 +24,6 @@ public class StorageTest {
 
             assertEquals("Test Item", result);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 

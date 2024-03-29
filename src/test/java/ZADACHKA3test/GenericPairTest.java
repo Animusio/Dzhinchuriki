@@ -10,11 +10,9 @@ import static org.junit.Assert.*;
 public class GenericPairTest {
 
     @Test
-    public void testGetters() throws NoSuchFieldException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        String firstValue = "Hello";
-        Integer secondValue = 123;
+    public void testGetters() throws Exception {
 
-        GenericPair<String, Integer> pair = new GenericPair<>(firstValue, secondValue);
+        GenericPair<String, Integer> pair = new GenericPair<>("Hello", 123);
 
         Field firstField = GenericPair.class.getDeclaredField("first");
         firstField.setAccessible(true);
@@ -22,8 +20,9 @@ public class GenericPairTest {
         Method getFirstMethod = GenericPair.class.getDeclaredMethod("getFirst");
         getFirstMethod.setAccessible(true);
 
-        assertEquals(firstValue, firstField.get(pair));
-        assertEquals(firstValue, getFirstMethod.invoke(pair));
+        assertEquals("Hello", firstField.get(pair));
+        assertEquals("Hello", getFirstMethod.invoke(pair));
+
 
         Field secondField = GenericPair.class.getDeclaredField("second");
         secondField.setAccessible(true);
@@ -31,7 +30,7 @@ public class GenericPairTest {
         Method getSecondMethod = GenericPair.class.getDeclaredMethod("getSecond");
         getSecondMethod.setAccessible(true);
 
-        assertEquals(secondValue, secondField.get(pair));
-        assertEquals(secondValue, getSecondMethod.invoke(pair));
+        assertEquals(123, secondField.get(pair));
+        assertEquals(123, getSecondMethod.invoke(pair));
     }
 }

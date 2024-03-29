@@ -1,6 +1,7 @@
 package ZADACHKA4test;
 
 import org.example.ZADACHKA4.GenericStock;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
@@ -14,16 +15,14 @@ import java.lang.reflect.InvocationTargetException;
 public class GenericStockTest {
     @Test
     public void testPrivateMethods() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        // Создаем экземпляр класса GenericStock
         GenericStock<String> stock = new GenericStock<>();
 
-        // Получаем доступ к приватному полю items с помощью рефлексии
         Field itemsField = GenericStock.class.getDeclaredField("items");
         itemsField.setAccessible(true);
         Map<String, Integer> items = (Map<String, Integer>) itemsField.get(stock);
 
         // Проверяем, что items пустой
-        assertTrue(items.isEmpty());
+        Assertions.assertTrue(items.isEmpty());
 
         // Подготавливаем объекты для добавления в коллекцию
         String item1 = "Item1";
@@ -47,9 +46,9 @@ public class GenericStockTest {
         removeMethod.invoke(stock, item1);
 
         // Проверяем результаты вызовов приватных методов
-        assertEquals(quantity2, getQuantityMethod.invoke(stock, item2));
-        assertNull(getQuantityMethod.invoke(stock, item1));
-        assertFalse(((Set<String>) getAllItemsMethod.invoke(stock)).contains(item1));
-        assertTrue(((Set<String>) getAllItemsMethod.invoke(stock)).contains(item2));
+        Assertions.assertEquals(quantity2, getQuantityMethod.invoke(stock, item2));
+        Assertions.assertNull(getQuantityMethod.invoke(stock, item1));
+        Assertions.assertFalse(((Set<String>) getAllItemsMethod.invoke(stock)).contains(item1));
+        Assertions.assertTrue(((Set<String>) getAllItemsMethod.invoke(stock)).contains(item2));
     }
 }
