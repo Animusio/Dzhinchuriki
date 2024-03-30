@@ -1,47 +1,65 @@
 package ZADACHKA5test;
 
 import org.example.ZADACHKA5.Employee;
-import org.example.ZADACHKA5.EmployeeRegistry;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import java.lang.reflect.Field;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Map;
 public class EmployeeRegistryTest {
 
     @Test
     public void testMethods() throws Exception {
+        Class<?> classobj = null;
         try {
-        EmployeeRegistry<Employee> registry = new EmployeeRegistry<>();
+            classobj = Class.forName("org.example.ZADACHKA5.EmployeeRegistry");
+        } catch (ClassNotFoundException e) {
+            Assertions.fail("Класс не найден");
+        }
+        try {
+            Constructor<?> constructor = classobj.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            Object employeeRegistryInstance = constructor.newInstance();
 
-        Field employeesField = EmployeeRegistry.class.getDeclaredField("employees");
-        employeesField.setAccessible(true);
-        Map<Integer, Employee> employees = (Map<Integer, Employee>) employeesField.get(registry);
-        Assertions.assertTrue(employees.isEmpty());
+            Method addMethod = classobj.getDeclaredMethod("add", Employee.class);
+            Method removeMethod = classobj.getDeclaredMethod("remove", int.class);
+            Method getEmployeeByIdMethod = classobj.getDeclaredMethod("getEmployeeById", int.class);
+            Method getAllEmployeesMethod = classobj.getDeclaredMethod("getAllEmployees");
 
-        Employee employee = new Employee(1, "John Doe");
-        Method addMethod = EmployeeRegistry.class.getDeclaredMethod("add", Employee.class);
-        addMethod.setAccessible(true);
-        addMethod.invoke(registry, employee);
-        Assertions.assertEquals(employee, employees.get(1));
+            addMethod.setAccessible(true);
+            removeMethod.setAccessible(true);
+            getEmployeeByIdMethod.setAccessible(true);
+            getAllEmployeesMethod.setAccessible(true);
 
-        Method removeMethod = EmployeeRegistry.class.getDeclaredMethod("remove", int.class);
-        Method getEmployeeByIdMethod = EmployeeRegistry.class.getDeclaredMethod("getEmployeeById", int.class);
-        Method getAllEmployeesMethod = EmployeeRegistry.class.getDeclaredMethod("getAllEmployees");
-        removeMethod.setAccessible(true);
-        getEmployeeByIdMethod.setAccessible(true);
-        getAllEmployeesMethod.setAccessible(true);
+            Employee employee1 = new Employee(1, "John Doe");
+            addMethod.invoke(employeeRegistryInstance, employee1);
 
-        removeMethod.invoke(registry, 1);
+            Employee retrievedEmployee = (Employee) getEmployeeByIdMethod.invoke(employeeRegistryInstance, 1);
 
-        Assertions.assertNull(getEmployeeByIdMethod.invoke(registry, 1));
+            List<Employee> allEmployees = (List<Employee>) getAllEmployeesMethod.invoke(employeeRegistryInstance);
 
-        List<Employee> allEmployees = (List<Employee>) getAllEmployeesMethod.invoke(registry);
-        Assertions.assertTrue(allEmployees.isEmpty());
-        } catch (Exception e) {
-            // Если возникло исключение, помечаем тест как проваленный
-            org.junit.jupiter.api.Assertions.fail("Ошибка при тестировании метода: " + e.getMessage());
+            Assertions.assertEquals(employee1, retrievedEmployee);
+            Assertions.assertEquals(1, allEmployees.size());
+
+            removeMethod.invoke(employeeRegistryInstance, 1);
+
+            Employee nullEmployee = (Employee) getEmployeeByIdMethod.invoke(employeeRegistryInstance, 1);
+            Assertions.assertNull(nullEmployee);
+
+
+        } catch (NoSuchMethodException e){
+            Assertions.fail("АЛАРМ АЛАРМ  АЛАРМ ошибка в методе");
+        }
+        catch (InvocationTargetException e){
+            Assertions.fail("АЛАРМ АЛАРМ  АЛАРМ вызываемый метод вызывает исключение");
+        }
+        catch (InstantiationException e){
+            Assertions.fail("АЛАРМ АЛАРМ  АЛАРМ не удалось создать объект класса");
+        }
+        catch (IllegalAccessException e){
+            Assertions.fail("АЛАРМ АЛАРМ  АЛАРМ нелегальная доступа к члену класса (полям, методам или конструкторам)");
         }
     }
 }

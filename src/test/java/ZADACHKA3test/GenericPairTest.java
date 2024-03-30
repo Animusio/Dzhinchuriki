@@ -1,41 +1,53 @@
 package ZADACHKA3test;
 
-import org.example.ZADACHKA3.GenericPair;
 import org.junit.Test;
-import java.lang.reflect.Field;
+import org.junit.jupiter.api.Assertions;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import static org.junit.Assert.*;
 
 public class GenericPairTest {
 
     @Test
-    public void testGetters() throws Exception {
+    public void testGetters(){
+        Class<?> classobj = null;
         try {
+            classobj = Class.forName("org.example.ZADACHKA3.GenericPair");
+        } catch (ClassNotFoundException e) {
+            Assertions.fail("Класс не найден");
+        }
+        try {
+            Object classStorageInstance1 = classobj.getConstructor(Object.class, Object.class).newInstance("dwdw", 123123);
+            Object classStorageInstance2 = classobj.getConstructor(Object.class, Object.class).newInstance(1234, "1231");
 
-        GenericPair<String, Integer> pair = new GenericPair<>("Hello", 123);
+            Method Method1 = classStorageInstance1.getClass().getDeclaredMethod("getFirst");
+            Method Method2 = classStorageInstance1.getClass().getDeclaredMethod("getSecond");
 
-        Field firstField = GenericPair.class.getDeclaredField("first");
-        firstField.setAccessible(true);
+            Method Method21 = classStorageInstance2.getClass().getDeclaredMethod("getFirst");
+            Method Method22 = classStorageInstance2.getClass().getDeclaredMethod("getSecond");
 
-        Method getFirstMethod = GenericPair.class.getDeclaredMethod("getFirst");
-        getFirstMethod.setAccessible(true);
+            Method1.setAccessible(true);
+            Method2.setAccessible(true);
 
-        assertEquals("Hello", firstField.get(pair));
-        assertEquals("Hello", getFirstMethod.invoke(pair));
+            Method21.setAccessible(true);
+            Method22.setAccessible(true);
 
+            Assertions.assertEquals(Method1.invoke(classStorageInstance1),"dwdw");
+            Assertions.assertEquals(Method2.invoke(classStorageInstance1), 123123);
 
-        Field secondField = GenericPair.class.getDeclaredField("second");
-        secondField.setAccessible(true);
+            Assertions.assertEquals(Method21.invoke(classStorageInstance2),1234);
+            Assertions.assertEquals(Method22.invoke(classStorageInstance2), "1231");
 
-        Method getSecondMethod = GenericPair.class.getDeclaredMethod("getSecond");
-        getSecondMethod.setAccessible(true);
-
-        assertEquals(123, secondField.get(pair));
-        assertEquals(123, getSecondMethod.invoke(pair));
-        } catch (Exception e) {
-            // Если возникло исключение, помечаем тест как проваленный
-            org.junit.jupiter.api.Assertions.fail("Ошибка при тестировании метода: " + e.getMessage());
+        } catch (NoSuchMethodException e){
+            Assertions.fail("АЛАРМ АЛАРМ  АЛАРМ ошибка в методе");
+        }
+        catch (InvocationTargetException e){
+            Assertions.fail("АЛАРМ АЛАРМ  АЛАРМ вызываемый метод вызывает исключение");
+        }
+        catch (InstantiationException e){
+            Assertions.fail("АЛАРМ АЛАРМ  АЛАРМ не удалось создать объект класса");
+        }
+        catch (IllegalAccessException e){
+            Assertions.fail("АЛАРМ АЛАРМ  АЛАРМ нелегальная доступа к члену класса (полям, методам или конструкторам)");
         }
     }
-}
+    }

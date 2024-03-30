@@ -24,27 +24,27 @@ import java.util.Map;
 
 
 //Решение -
-public class EmployeeRegistry<T extends Employee> {
-    private Map<Integer, T> employees;
-
-    public EmployeeRegistry() {
-        employees = new HashMap<>();
-    }
-
-    private void add(T employee) {
-        employees.put(employee.getId(), employee);
-    }
-
-    private void remove(int id) {
-        employees.remove(id);
-    }
-
-    private T getEmployeeById(int id) {
-        return employees.get(id);
-    }
-
-    private List<T> getAllEmployees() {
-        return new ArrayList<>(employees.values());
-    }
-}
+//public class EmployeeRegistry<T extends Employee> {
+//    private Map<Integer, T> employees;
+//
+//    public EmployeeRegistry() {
+//        employees = new HashMap<>();
+//    }
+//
+//    private void add(T employee) {
+//        employees.put(employee.getId(), employee);
+//    }
+//
+//    private void remove(int id) {
+//        employees.remove(id);
+//    }
+//
+//    private T getEmployeeById(int id) {
+//        return employees.get(id);
+//    }
+//
+//    private List<T> getAllEmployees() {
+//        return new ArrayList<>(employees.values());
+//    }
+//}
 

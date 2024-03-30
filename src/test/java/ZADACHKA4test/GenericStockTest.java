@@ -1,59 +1,89 @@
 package ZADACHKA4test;
 
-import org.example.ZADACHKA4.GenericStock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.Field;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.Map;
 import java.util.Set;
-import static org.junit.Assert.*;
 
 import java.lang.reflect.InvocationTargetException;
 
 public class GenericStockTest {
     @Test
     public void testPrivateMethods(){
+        Class<?> genericStockClass = null;
         try {
-        GenericStock<String> stock = new GenericStock<>();
+            genericStockClass = Class.forName("org.example.ZADACHKA4.GenericStock");
+        } catch (ClassNotFoundException e) {
+            Assertions.fail("Класс не найден");
+        }
+        try {
 
-        Field itemsField = GenericStock.class.getDeclaredField("items");
-        itemsField.setAccessible(true);
-        Map<String, Integer> items = (Map<String, Integer>) itemsField.get(stock);
+            Constructor<?> genericStockConstructor = genericStockClass.getDeclaredConstructor();
+            genericStockConstructor.setAccessible(true);
+            Object genericStock = genericStockConstructor.newInstance();
 
-        // Проверяем, что items пустой
-        Assertions.assertTrue(items.isEmpty());
+            Method addMethod = genericStockClass.getDeclaredMethod("add", Object.class, int.class);
+            Method removeMethod = genericStockClass.getDeclaredMethod("remove", Object.class);
+            Method getQuantityMethod = genericStockClass.getDeclaredMethod("getQuantity", Object.class);
+            Method getAllItemsMethod = genericStockClass.getDeclaredMethod("getAllItems");
 
-        // Подготавливаем объекты для добавления в коллекцию
-        String item1 = "Item1";
-        String item2 = "Item2";
-        int quantity1 = 10;
-        int quantity2 = 20;
+            addMethod.setAccessible(true);
+            removeMethod.setAccessible(true);
+            getQuantityMethod.setAccessible(true);
+            getAllItemsMethod.setAccessible(true);
 
-        // Получаем доступ к приватным методам с помощью рефлексии и устанавливаем их доступность
-        Method addMethod = GenericStock.class.getDeclaredMethod("add", Object.class, int.class);
-        Method removeMethod = GenericStock.class.getDeclaredMethod("remove", Object.class);
-        Method getQuantityMethod = GenericStock.class.getDeclaredMethod("getQuantity", Object.class);
-        Method getAllItemsMethod = GenericStock.class.getDeclaredMethod("getAllItems");
-        addMethod.setAccessible(true);
-        removeMethod.setAccessible(true);
-        getQuantityMethod.setAccessible(true);
-        getAllItemsMethod.setAccessible(true);
+            addMethod.invoke(genericStock, "Item1", 10);
+            addMethod.invoke(genericStock, "Item2", 20);
+            removeMethod.invoke(genericStock, "Item1");
 
-        // Вызываем приватные методы для добавления и удаления элементов
-        addMethod.invoke(stock, item1, quantity1);
-        addMethod.invoke(stock, item2, quantity2);
-        removeMethod.invoke(stock, item1);
+            Assertions.assertEquals(20, getQuantityMethod.invoke(genericStock, "Item2"));
+            Assertions.assertNull(getQuantityMethod.invoke(genericStock, "Item1"));
+            Set<?> allItems = (Set<?>) getAllItemsMethod.invoke(genericStock);
+            Assertions.assertEquals(Set.of("Item2"), allItems);
 
-        // Проверяем результаты вызовов приватных методов
-        Assertions.assertEquals(quantity2, getQuantityMethod.invoke(stock, item2));
-        Assertions.assertNull(getQuantityMethod.invoke(stock, item1));
-        Assertions.assertFalse(((Set<String>) getAllItemsMethod.invoke(stock)).contains(item1));
-        Assertions.assertTrue(((Set<String>) getAllItemsMethod.invoke(stock)).contains(item2));
-        } catch (Exception e) {
-            // Если возникло исключение, помечаем тест как проваленный
-            org.junit.jupiter.api.Assertions.fail("Ошибка при тестировании метода: " + e.getMessage());
+
+
+
+
+
+            Constructor<?> genericStockConstructor2 = genericStockClass.getDeclaredConstructor();
+            genericStockConstructor2.setAccessible(true);
+            Object genericStock2 = genericStockConstructor2.newInstance();
+
+            Method addMethod2 = genericStockClass.getDeclaredMethod("add", Object.class, int.class);
+            Method removeMethod2 = genericStockClass.getDeclaredMethod("remove", Object.class);
+            Method getQuantityMethod2 = genericStockClass.getDeclaredMethod("getQuantity", Object.class);
+            Method getAllItemsMethod2 = genericStockClass.getDeclaredMethod("getAllItems");
+
+            addMethod2.setAccessible(true);
+            removeMethod2.setAccessible(true);
+            getQuantityMethod2.setAccessible(true);
+            getAllItemsMethod2.setAccessible(true);
+
+            addMethod.invoke(genericStock2, "Item1", 10);
+            addMethod.invoke(genericStock2, "Item2", 20);
+            removeMethod.invoke(genericStock2, "Item1");
+
+            Assertions.assertEquals(20, getQuantityMethod.invoke(genericStock, "Item2"));
+            Assertions.assertNull(getQuantityMethod.invoke(genericStock, "Item1"));
+            Set<String> allItems2 = (Set<String>) getAllItemsMethod.invoke(genericStock);
+            Assertions.assertEquals(Set.of("Item2"), allItems2);
+
+        }
+        catch (NoSuchMethodException e){
+            Assertions.fail("АЛАРМ АЛАРМ  АЛАРМ ошибка в методе");
+        }
+        catch (InvocationTargetException e){
+            Assertions.fail("АЛАРМ АЛАРМ  АЛАРМ вызываемый метод вызывает исключение");
+        }
+        catch (InstantiationException e){
+            Assertions.fail("АЛАРМ АЛАРМ  АЛАРМ не удалось создать объект класса");
+        }
+        catch (IllegalAccessException e){
+            Assertions.fail("АЛАРМ АЛАРМ  АЛАРМ нелегальная доступа к члену класса (полям, методам или конструкторам)");
         }
     }
+
+
 }

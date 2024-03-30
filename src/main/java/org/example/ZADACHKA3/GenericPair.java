@@ -14,20 +14,20 @@ package org.example.ZADACHKA3;
 
 
 //Решение -
-public class GenericPair<T, U> {
-    private T first;
-    private U second;
-
-    public GenericPair(T first, U second) {
-        this.first = first;
-        this.second = second;
-    }
-
-    private T getFirst() {
-        return first;
-    }
-
-    private U getSecond() {
-        return second;
-    }
-}
+//public class GenericPair<T, U> {
+//    private T first;
+//    private U second;
+//
+//    public GenericPair(T first, U second) {
+//        this.first = first;
+//        this.second = second;
+//    }
+//
+//    private T getFirst() {
+//        return first;
+//    }
+//
+//    private U getSecond() {
+//        return second;
+//    }
+//}
